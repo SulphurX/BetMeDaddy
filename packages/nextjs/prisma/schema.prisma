@@ -38,3 +38,24 @@ model Pods {
   winners               String[]
   sponsors              String[]
 }
+
+model User {
+  id        String   @id @default(uuid()) @db.Uuid
+  wallet    String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  isCompany   Boolean  @default(false)
+  profile   Profile?
+}
+
+model Profile {
+  id        String   @id @default(uuid()) @db.Uuid
+  image     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  github    String?
+  linkedin  String?
+  twitter   String?
+  userId    String? @unique @db.Uuid
+  user      User?   @relation(fields: [userId], references: [id])
+}
