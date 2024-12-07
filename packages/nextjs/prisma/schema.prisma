@@ -16,8 +16,8 @@ datasource db {
 }
 
 model Pods {
-  id                    String    @id @default(cuid())
-  title                 String
+  id                    String   @id @default(uuid()) @db.Uuid
+  title                 String   @unique
   slug                  String
   deadline              DateTime
   description           String
