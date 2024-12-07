@@ -4,8 +4,8 @@ import { db } from "~~/lib/prisma";
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
-  const body: BodyInit = JSON.stringify({ message: "Hello, World!" });
-  return new NextResponse(body);
+  const response = await db.pods.findMany();
+  return new NextResponse(JSON.stringify(response));
 };
 
 export const POST = async (req: NextRequest): Promise<NextResponse> => {
