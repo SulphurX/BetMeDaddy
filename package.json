@@ -32,6 +32,10 @@
     "next:build": "yarn workspace @se-2/nextjs build",
     "next:serve": "yarn workspace @se-2/nextjs serve",
     "prisma:generate": "yarn workspace @se-2/nextjs postinstall",
+<<<<<<< HEAD
+    "prisma:migrate": "yarn workspace @se-2/nextjs migrate",
+=======
+>>>>>>> main
     "postinstall": "husky",
     "precommit": "lint-staged",
     "vercel": "yarn workspace @se-2/nextjs vercel",
