@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { AnonAadhaarProvider } from "@anon-aadhaar/react";
 import { RainbowKitProvider, darkTheme, lightTheme } from "@rainbow-me/rainbowkit";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AppProgressBar as ProgressBar } from "next-nprogress-bar";
@@ -47,7 +46,6 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
   }, []);
 
   return (
-    <AnonAadhaarProvider _useTestAadhaar={true}>
       <WagmiProvider config={wagmiConfig}>
         <QueryClientProvider client={queryClient}>
           <ProgressBar height="3px" color="#2299dd" />
@@ -59,6 +57,5 @@ export const ScaffoldEthAppWithProviders = ({ children }: { children: React.Reac
           </RainbowKitProvider>
         </QueryClientProvider>
       </WagmiProvider>
-    </AnonAadhaarProvider>
   );
 };
