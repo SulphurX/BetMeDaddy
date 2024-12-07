@@ -98,7 +98,7 @@ export const Header = () => {
       </div>
       <div className="navbar-end flex-grow mr-4">
         <div className="flex gap-4 items-center">
-          <AnonAadhaarButton />
+          {/* <AnonAadhaarButton /> */}
           <RainbowKitCustomConnectButton />
         </div>
         <FaucetButton />
