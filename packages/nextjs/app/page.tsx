@@ -49,6 +49,19 @@ const Home: NextPage = () => {
     },
   ];
 
+  // <div className="mt-8 flex flex-col items-center">
+  //           {/* TODO:// Generate secure seed. How? */}
+  //           <LogInWithAnonAadhaar nullifierSeed={123} />
+  //           <div className="mt-4">
+  //             <p className="text-center">
+  //               Verification Status: <span className="font-bold">{anonAadhaar.status}</span>
+  //             </p>
+  //             {anonAadhaar.status === "logged-in" && (
+  //               <p className="text-center text-green-500 mt-2">✅ Successfully verified with Anon Aadhaar!</p>
+  //             )}
+  //           </div>
+  //         </div>
+
   return (
     <div className="mx-14 my-8">
       <Table className="max-w-[60vw]">
@@ -71,7 +84,7 @@ const Home: NextPage = () => {
           ))}
         </TableBody>
         {/* <TableFooter>
-          <TableRow>
+          <TableRow>  //             </p>
             <TableCell colSpan={3}>Total</TableCell>
             <TableCell className="text-right">$2,500.00</TableCell>
           </TableRow>

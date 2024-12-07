@@ -43,5 +43,8 @@
   },
   "engines": {
     "node": ">=18.18.0"
+  },
+  "dependencies": {
+    "@anon-aadhaar/react": "^2.4.2"
   }
 }
