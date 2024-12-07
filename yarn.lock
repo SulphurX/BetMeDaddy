@@ -12742,6 +12742,7 @@ __metadata:
     "@anon-aadhaar/react": ^2.4.2
     husky: ^9.1.6
     lint-staged: ^15.2.10
+    tailwind-merge: ^2.5.5
   languageName: unknown
   linkType: soft
 
