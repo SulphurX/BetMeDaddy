@@ -55,6 +55,11 @@ const config: HardhatUserConfig = {
         enabled: process.env.MAINNET_FORKING_ENABLED === "true",
       },
     },
+    citrea: {
+      url: "https://rpc.testnet.citrea.xyz",
+      chainId: 5115,
+      accounts: [deployerPrivateKey],
+    },
     mainnet: {
       url: `https://eth-mainnet.alchemyapi.io/v2/${providerApiKey}`,
       accounts: [deployerPrivateKey],

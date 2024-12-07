@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "./IReputationSystem.sol";
+import "./interfaces/IReputationSystem.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/math/Math.sol";
 
 /**
@@ -13,7 +13,6 @@ import "@openzeppelin/contracts/utils/math/Math.sol";
 contract ReputationSystem is IReputationSystem, Ownable, ReentrancyGuard {
     using Math for uint256;
 
-    // Constants for calculations
     uint256 private constant SCALE = 1e18;
     uint256 private constant BASE_REPUTATION_REWARD = 100 * SCALE;
     uint256 private constant MAX_DIFFICULTY_MULTIPLIER = 5 * SCALE;
@@ -22,10 +21,15 @@ contract ReputationSystem is IReputationSystem, Ownable, ReentrancyGuard {
     uint256 private constant MAX_VOTING_WEIGHT = 3 * SCALE;   // 3x
     uint256 private constant REPUTATION_THRESHOLD = 1000000 * SCALE;
 
-    // Reputation state
     mapping(address => uint256) private userReputation;
     mapping(address => uint256) private totalPredictions;
     mapping(address => uint256) private correctPredictions;
+    // Track consensus for each market
+    mapping(address => MarketConsensus) private marketConsensus;
+    // Whitelist of market factory contracts that can interact
+    mapping(address => bool) public whitelistedFactories;
+
+    constructor(address initialOwner) Ownable(initialOwner) {}
     
     // Market consensus tracking
     struct MarketConsensus {
@@ -34,12 +38,6 @@ contract ReputationSystem is IReputationSystem, Ownable, ReentrancyGuard {
         bool resolved;
         mapping(address => Position) userPositions;
     }
-    
-    // Track consensus for each market
-    mapping(address => MarketConsensus) private marketConsensus;
-    
-    // Whitelist of market factory contracts that can interact
-    mapping(address => bool) public whitelistedFactories;
 
     // Modifiers
     modifier onlyWhitelistedFactory() {

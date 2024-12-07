@@ -1,10 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-/**
- * @title IReputationSystem
- * @dev Interface for reputation system integration
- */
 interface IReputationSystem {
     struct Position {
         uint256 stake;
@@ -28,6 +24,8 @@ interface IReputationSystem {
         uint256 entryPrice
     );
 
+    function whitelistFactory(address factory) external;
+    
     function recordPosition(
         address market,
         address user,

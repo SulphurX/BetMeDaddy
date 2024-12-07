@@ -1,44 +1,58 @@
-import { HardhatRuntimeEnvironment } from "hardhat/types";
 import { DeployFunction } from "hardhat-deploy/types";
-import { Contract } from "ethers";
+import { HardhatRuntimeEnvironment } from "hardhat/types";
+import { ReputationSystem } from "@typechain/hardhat";
 
-/**
- * Deploys a contract named "YourContract" using the deployer account and
- * constructor arguments set to the deployer address
- *
- * @param hre HardhatRuntimeEnvironment object.
- */
-const deployYourContract: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
-  /*
-    On localhost, the deployer account is the one that comes with Hardhat, which is already funded.
+const deployPredictionMarkets: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
+  const { deployments, getNamedAccounts, network } = hre;
+  const { deploy } = deployments;
+  const { deployer } = await getNamedAccounts();
 
-    When deploying to live networks (e.g `yarn deploy --network sepolia`), the deployer account
-    should have sufficient balance to pay for the gas fees for contract creation.
+  console.log("Deploying to Citrea with account:", deployer);
 
-    You can generate a random account with `yarn generate` which will fill DEPLOYER_PRIVATE_KEY
-    with a random private key in the .env file (then used on hardhat.config.ts)
-    You can run the `yarn account` command to check your balance in every network.
-  */
-  const { deployer } = await hre.getNamedAccounts();
-  const { deploy } = hre.deployments;
-
-  await deploy("YourContract", {
+  // 1. Deploy Market Implementation
+  const marketImpl = await deploy("Market", {
     from: deployer,
-    // Contract constructor arguments
-    args: [deployer],
+    args: [],
     log: true,
-    // autoMine: can be passed to the deploy function to make the deployment process faster on local networks by
-    // automatically mining the contract deployment transaction. There is no effect on live networks.
-    autoMine: true,
   });
+  console.log("Market implementation deployed to:", marketImpl.address);
 
-  // Get the deployed contract to interact with it after deploying.
-  const yourContract = await hre.ethers.getContract<Contract>("YourContract", deployer);
-  console.log("👋 Initial greeting:", await yourContract.greeting());
+  // 2. Deploy ReputationSystem
+  const reputationSystem = await deploy("ReputationSystem", {
+    from: deployer,
+    args: [deployer], // initialOwner
+    log: true,
+  });
+  console.log("ReputationSystem deployed to:", reputationSystem.address);
+
+  // 3. Deploy MarketFactory
+  const marketFactory = await deploy("MarketFactory", {
+    from: deployer,
+    args: [
+      deployer, // initialOwner
+      marketImpl.address,
+      reputationSystem.address,
+    ],
+    log: true,
+  });
+  console.log("MarketFactory deployed to:", marketFactory.address);
+
+  // 4. Whitelist the MarketFactory in ReputationSystem
+  const ReputationSystem = await hre.ethers.getContractFactory("ReputationSystem");
+  const repSystem = ReputationSystem.attach(reputationSystem.address) as ReputationSystem;
+
+  const whitelistTx = await repSystem.whitelistFactory(marketFactory.address);
+  await whitelistTx.wait();
+  console.log("MarketFactory whitelisted in ReputationSystem");
+
+  // Log deployment addresses for verification
+  console.log("\nDeployment Summary:");
+  console.log("===================");
+  console.log("Network:", network.name);
+  console.log("Market Implementation:", marketImpl.address);
+  console.log("ReputationSystem:", reputationSystem.address);
+  console.log("MarketFactory:", marketFactory.address);
 };
 
-export default deployYourContract;
-
-// Tags are useful if you have multiple deploy files and only want to run one of them.
-// e.g. yarn deploy --tags YourContract
-deployYourContract.tags = ["YourContract"];
+deployPredictionMarkets.tags = ["PredictionMarkets"];
+export default deployPredictionMarkets;

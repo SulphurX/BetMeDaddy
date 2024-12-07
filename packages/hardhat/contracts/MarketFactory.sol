@@ -5,7 +5,7 @@ import "./interfaces/IMarket.sol";
 import "./interfaces/IReputationSystem.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/proxy/Clones.sol";
-import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title MarketFactory
@@ -55,7 +55,11 @@ contract MarketFactory is Ownable, ReentrancyGuard {
     /**
      * @dev Constructor sets the implementation contract and reputation system
      */
-    constructor(address _implementation, address _reputationSystem) {
+    constructor(
+        address initialOwner,
+        address _implementation, 
+        address _reputationSystem
+    ) Ownable(initialOwner) {
         if (_implementation == address(0)) revert InvalidImplementation();
         if (_reputationSystem == address(0)) revert InvalidReputationSystem();
         
