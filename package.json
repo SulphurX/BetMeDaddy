@@ -46,6 +46,7 @@
   },
   "dependencies": {
     "@anon-aadhaar/react": "^2.4.2",
+    "@graphprotocol/graph-cli": "^0.91.1",
     "tailwind-merge": "^2.5.5"
   }
 }

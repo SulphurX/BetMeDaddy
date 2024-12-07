@@ -14,6 +14,7 @@ const deployPredictionMarkets: DeployFunction = async function (hre: HardhatRunt
     from: deployer,
     args: [],
     log: true,
+    autoMine: true,
   });
   console.log("Market implementation deployed to:", marketImpl.address);
 

@@ -1,0 +1,36 @@
+{
+  "language": "Solidity",
+  "sources": {
+    "contracts/Counter.sol": {
+      "content": "// SPDX-License-Identifier: MIT\npragma solidity ^0.8.20;\n\ncontract Counter {\n    uint256 private count;\n    \n    event CounterIncremented(address indexed by, uint256 newCount);\n    event CounterDecremented(address indexed by, uint256 newCount);\n    \n    function increment() public {\n        count += 1;\n        emit CounterIncremented(msg.sender, count);\n    }\n    \n    function decrement() public {\n        require(count > 0, \"Counter: cannot decrement below zero\");\n        count -= 1;\n        emit CounterDecremented(msg.sender, count);\n    }\n    \n    function getCount() public view returns (uint256) {\n        return count;\n    }\n} "
+    }
+  },
+  "settings": {
+    "evmVersion": "shanghai",
+    "optimizer": {
+      "enabled": true,
+      "runs": 200
+    },
+    "outputSelection": {
+      "*": {
+        "*": [
+          "abi",
+          "evm.bytecode",
+          "evm.deployedBytecode",
+          "evm.methodIdentifiers",
+          "metadata",
+          "devdoc",
+          "userdoc",
+          "storageLayout",
+          "evm.gasEstimates"
+        ],
+        "": [
+          "ast"
+        ]
+      }
+    },
+    "metadata": {
+      "useLiteralContent": true
+    }
+  }
+}
