@@ -31,6 +31,7 @@
     "next:check-types": "yarn workspace @se-2/nextjs check-types",
     "next:build": "yarn workspace @se-2/nextjs build",
     "next:serve": "yarn workspace @se-2/nextjs serve",
+    "prisma:generate": "yarn workspace @se-2/nextjs postinstall",
     "postinstall": "husky",
     "precommit": "lint-staged",
     "vercel": "yarn workspace @se-2/nextjs vercel",
