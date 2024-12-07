@@ -1,10 +1,10 @@
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 :root,
 [data-theme] {
-  background: oklch(var(--b2));
+  background: #000000;
 }
 
 body {
@@ -29,4 +29,10 @@ p {
 
 .btn.btn-ghost {
   @apply shadow-none;
+}
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+  }
 }
