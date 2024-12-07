@@ -8,13 +8,18 @@
     "build": "next build",
     "serve": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "format": "prettier --write . '!(node_modules|.next|contracts)/**/*'",
     "check-types": "tsc --noEmit --incremental",
     "vercel": "vercel --build-env YARN_ENABLE_IMMUTABLE_INSTALLS=false --build-env ENABLE_EXPERIMENTAL_COREPACK=1",
     "vercel:yolo": "vercel --build-env YARN_ENABLE_IMMUTABLE_INSTALLS=false --build-env ENABLE_EXPERIMENTAL_COREPACK=1 --build-env NEXT_PUBLIC_IGNORE_BUILD_ERROR=true"
   },
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
   "dependencies": {
     "@heroicons/react": "^2.1.5",
+    "@prisma/client": "6.0.1",
     "@rainbow-me/rainbowkit": "2.1.6",
     "@tanstack/react-query": "^5.59.15",
     "@uniswap/sdk-core": "^5.8.2",
@@ -28,6 +33,7 @@
     "next": "^14.2.11",
     "next-nprogress-bar": "^2.3.13",
     "next-themes": "^0.3.0",
+    "prisma": "^6.0.1",
     "qrcode.react": "^4.0.1",
     "react": "^18.3.1",
     "react-copy-to-clipboard": "^5.1.0",
